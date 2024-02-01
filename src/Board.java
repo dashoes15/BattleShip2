@@ -44,33 +44,52 @@ public class Board {
 
 
     public boolean addShip(int row, int col, int len, boolean horizontal){
+        int x = col;
+        boolean h = true;
+        boolean help = false;
         if (horizontal) {
-            if (col + len > 9) {
+            if (col + len > 10) {
                 return false;
             }
-            for (int c = col; c < col + len; c++) {
-                if (squares[row][c].equals("b")) {
-                    return false;
+            for (int r = 0; r < len; r++) {
+                if (!squares[row][col].equals("-")) {
+                    h = false;
+                }
+                col++;
+            }
+            col = x;
+            if (h) {
+                for (int r = 0; r < len; r++) {
+                    squares[row][col] = "b";
+                    col++;
+                }
+                help = true;
+            }
+        } else{
+                if (col + len > 10) {
+                    return help;
+                }
+                x = row;
+                for (int r = 0; r < len; r++) {
+                    if (!squares[row][col].equals("-")) {
+                        h = false;
+                    }
+                    row++;
+                }
+                row = x;
+                if (h) {
+                    for (int r = 0; r < len; r++) {
+                        squares[row][col] = "b";
+                        row++;
+                    }
+                    help = true;
                 }
             }
-            for (int c = col; c < col + len; c++) {
-                squares[row][c] = "b";
-            }
-        }else{
-            if (row + len > 9) {
-                return false;
-            }
-            for (int r = row; r < row + len; r++) {
-                if (squares[r][col].equals("b")) {
-                    return false;
-                }
-            }
-            for (int r = row; r < row + len; r++) {
-                squares[r][col] = "b";
-            }
+        return help;
+
         }
-        return true;
-    }
+
+
 
 
 
